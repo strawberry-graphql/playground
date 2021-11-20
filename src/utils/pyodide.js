@@ -12,19 +12,23 @@ const load = async () => {
 
 const install = async (packages) => {
   await pyodide.loadPackage(['micropip'])
+  packages = packages.map((p) => `"${p}"`)
   await pyodide.runPythonAsync(`
     import micropip
-    await micropip.install("${packages}")
+    await micropip.install([${packages}])
   `)
 }
 
-export const initPyodide = async ({ packages }) => {
+export const initPyodide = async ({ packages, logging }) => {
+  logging = logging || (() => {})
   if (!pyodide) {
+    logging('Loading pyodide')
     await load()
-
+    logging('Loading python packages')
     if (packages) {
       await install(packages)
     }
+    logging('Ready')
   }
 
   return pyodide

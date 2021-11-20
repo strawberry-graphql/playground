@@ -9,13 +9,14 @@ export const useStrawberry = ({ code, query, variables }) => {
   const state = reactive({
     results: null,
     errors: null,
-    loading: true,
+    loading: [],
     schema: null,
   })
 
   onMounted(async () => {
     const pyodide = await initPyodide({
-      packages
+      packages,
+      logging: (str) => state.loading.push(str)
     })
     window.pyodide = pyodide
 
@@ -76,7 +77,7 @@ export const useStrawberry = ({ code, query, variables }) => {
 
     }, { immediate: true })
 
-    state.loading = false
+    state.loading = null
   })
 
   return toRefs(state)
