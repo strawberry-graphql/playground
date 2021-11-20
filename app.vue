@@ -1,4 +1,5 @@
 <template>
+  <Title>Strawberry GraphQL Playground</Title>
   <div class="absolute inset-0 flex flex-col font-sans">
     <Header />
     <Playground class="flex-1" :state="state" />

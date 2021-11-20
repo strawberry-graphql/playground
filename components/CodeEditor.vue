@@ -27,6 +27,7 @@ onMounted(() => {
   const extensions = [
     basicSetup,
     keymap.of([indentWithTab]),
+    EditorView.lineWrapping,
     EditorView.updateListener.of((v) => {
       if (v.docChanged) {
         updateValue(v.state.doc)
