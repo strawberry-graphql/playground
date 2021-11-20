@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "start": "node .output/server/index.mjs"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.3.1",
+    "nuxt3": "^3.0.0-27284664.232fdd8"
+  },
+  "dependencies": {
+    "@codemirror/basic-setup": "^0.19.0",
+    "@codemirror/lang-json": "^0.19.1",
+    "@codemirror/lang-python": "^0.19.2",
+    "@unocss/reset": "^0.11.2",
+    "@vueuse/core": "^6.9.1",
+    "jest": "^27.3.1",
+    "jszip": "^3.7.1",
+    "unocss": "^0.9.0"
+  }
+}
