@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "deploy": "vue-tsc --noEmit && vite build --outDir docs --base /strawberry-playground/",
     "serve": "vite preview"
   },
   "dependencies": {
