@@ -82,7 +82,7 @@ onUnmounted(() => {
 </script>
 
 <style>
-.cm-editor {
+.cm-editor, .cm-scroller {
   height: 100%;
   outline: 0 !important;
 }

@@ -1,19 +1,17 @@
 <template>
-  <div class="flex flex-col" :class="{ 'flex-1': visible }">
-    <div
-      class="flex cursor-pointer select-none p-1 pl-9 bg-gray-100"
-      @click="toggle"
-    >
-      <div class="flex-1">
-        {{ props.title }}
-      </div>
-      <div class="opacity-20 text-sm">
-        ({{ visible ? 'visible' : 'hidden' }})
-      </div>
+  <div
+    class="flex cursor-pointer select-none p-1 pl-9 bg-gray-100"
+    @click="toggle"
+  >
+    <div class="flex-1">
+      {{ props.title }}
     </div>
-    <div class="flex-1 flex" v-show="visible">
-      <slot/>
+    <div class="opacity-20 text-sm">
+      ({{ visible ? 'visible' : 'hidden' }})
     </div>
+  </div>
+  <div class="flex-x sm:w-1/2 overflow-y-scroll" v-if="visible">
+    <slot/>
   </div>
 </template>
 

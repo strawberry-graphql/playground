@@ -2,6 +2,7 @@
   <div class="absolute inset-0 flex flex-col font-sans">
     <Header />
     <Playground class="flex-1" :state="state" />
+    <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" />
     <Loading :loading="state.loading" />
   </div>
 </template>
