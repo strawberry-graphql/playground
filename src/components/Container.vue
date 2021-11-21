@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex cursor-pointer select-none p-1 pl-9 bg-gray-100"
+    class="flex cursor-pointer select-none p-1 pl-9 bg-gray-100 border-0 border-t-1 border-red-700"
     @click="toggle"
   >
     <div class="flex-1">

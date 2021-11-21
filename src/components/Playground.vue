@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col flex-wrap items-stretch">
+  <div class="flex flex-col flex-wrap items-stretch border-0 border-b-1 border-red-700">
     <Container
       title="Strawberry Schema">
       <CodeMirror
@@ -22,7 +22,7 @@
         v-model:value="state.variables"
       />
     </Container>
-    <div class="sm:flex-break" />
+    <div class="sm:flex-break border-0 sm:border-r-1 border-red-700" />
     <Container
       title="Query Results">
       <CodeMirror
