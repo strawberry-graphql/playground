@@ -5,6 +5,6 @@ This project implements playground for testing, debugging and sharing Straberry 
 ## Getting Started
 
 ```
-yarn install
-yarn dev
+pnpm install
+pnpm dev
 ```

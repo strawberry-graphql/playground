@@ -4,12 +4,37 @@
     <div class="flex-1 text-lg">
       Strawberry GraphQL Playground
     </div>
-    <div>
+    <div class="flex flex-col sm:flex-row items-end sm:items-center space-x-5">
       <a
-        class="text-red-700 hover:opacity-70"
+        class="text-red-700 hover:opacity-70 no-underline cursor-pointer"
+        @click.prevent="shareUrl"
+      >
+        <i-mdi-share-variant class="text-lg"/>
+      </a>
+      <a
+        class="text-red-700 hover:opacity-70 no-underline"
+        href="https://github.com/la4de/strawberry-playground"
+        target="_blank"
+      >
+        <i-mdi-github class="text-xl"/>
+      </a>
+      <a
+        class="text-red-700 hover:opacity-70 no-underline"
         href="https://strawberry.rocks/"
         target="_blank"
-      >strawberry.rocks</a>
+      >
+        <StrawberryIcon class="h-6 pr-.5" />
+      </a>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useClipboard } from '../utils/clipboard.js'
+const { writeText } = useClipboard()
+
+const shareUrl = () => {
+  writeText(window.location.href)
+  alert('Playground url copied to clipboard')
+}
+</script>
