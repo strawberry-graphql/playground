@@ -1,6 +1,6 @@
 <template>
   <div class="absolute inset-0 flex flex-col font-sans">
-    <Header />
+    <Header :state="state" />
     <Playground class="flex-1" :state="state" />
     <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" />
     <Loading :loading="state.loading" />
@@ -14,7 +14,12 @@ import { useState } from './state.js'
 import { useStrawberry } from './utils/strawberry.js'
 
 const state = useState()
-const { results, errors, loading, schema } = useStrawberry(toRefs(state))
+const { results, errors, loading, schema, init } = useStrawberry(toRefs(state))
+watch(() => state.strawberryVersion, (version, oldVersion) => {
+  if (version && !oldVersion) {
+    init()
+  }
+})
 state.results = results
 state.errors = errors
 state.loading = loading
