@@ -5,9 +5,23 @@
       Strawberry GraphQL Playground
     </div>
     <div class="flex flex-col sm:flex-row items-end sm:items-center space-x-5">
+      <div>
+        <select
+          class="w-30"
+          v-model="props.state.strawberryVersion"
+          @mouseover="fetchVersions"
+          @blur="fetchVersion"
+        >
+          <option
+            v-for="version in (versions || [props.state.strawberryVersion])"
+            :key="version"
+          >{{ version }}</option>
+        </select>
+      </div>
       <a
         class="text-red-700 hover:opacity-70 no-underline cursor-pointer"
         @click.prevent="shareUrl"
+        title="Share playground url"
       >
         <i-mdi-share-variant class="text-lg"/>
       </a>
@@ -15,6 +29,7 @@
         class="text-red-700 hover:opacity-70 no-underline"
         href="https://github.com/la4de/strawberry-playground"
         target="_blank"
+        title="Go to github repository"
       >
         <i-mdi-github class="text-xl"/>
       </a>
@@ -22,6 +37,7 @@
         class="text-red-700 hover:opacity-70 no-underline"
         href="https://strawberry.rocks/"
         target="_blank"
+        title="Go to Strawberry documentation"
       >
         <StrawberryIcon class="h-6 pr-.5" />
       </a>
@@ -30,7 +46,13 @@
 </template>
 
 <script setup>
+import { useStrawberryVersions } from '../utils/strawberry.js'
+import { ref } from 'vue'
 import { useClipboard } from '../utils/clipboard.js'
+
+const props = defineProps(['state'])
+const { versions, fetchVersions } = useStrawberryVersions()
+
 const { writeText } = useClipboard()
 
 const shareUrl = () => {

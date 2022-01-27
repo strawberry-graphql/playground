@@ -1,11 +1,25 @@
-import { reactive, toRefs, watch } from 'vue'
+import { reactive, toRefs, unref, watch } from 'vue'
 import { initPyodide } from './pyodide.js'
 
-const packages = [
-  './strawberry_graphql-0.87.1-py3-none-any.whl',
-]
+const url = 'https://pypi.org/pypi/strawberry-graphql/json'
 
-export const useStrawberry = ({ code, query, variables }) => {
+export const useStrawberryVersions = () => {
+  const versions = ref()
+  const fetchVersions = async () => {
+    if (versions.value) {
+      return
+    }
+    const rsp = await fetch(url)
+    const data = await rsp.json()
+    const keys = Object.keys(data.releases)
+    keys.push('latest')
+    keys.reverse()
+    versions.value = keys
+  }
+  return { versions, fetchVersions }
+}
+
+export const useStrawberry = ({ code, query, variables, requirements }) => {
   const state = reactive({
     results: null,
     errors: null,
@@ -13,7 +27,10 @@ export const useStrawberry = ({ code, query, variables }) => {
     schema: null,
   })
 
-  onMounted(async () => {
+  const init = async () => {
+    const packages = unref(requirements).split('\n')
+    console.log('packages', packages)
+
     const pyodide = await initPyodide({
       packages,
       logging: (str) => state.loading.push(str)
@@ -78,7 +95,10 @@ export const useStrawberry = ({ code, query, variables }) => {
     }, { immediate: true })
 
     state.loading = null
-  })
+  }
 
-  return toRefs(state)
+  return {
+    ...toRefs(state),
+    init,
+  }
 }

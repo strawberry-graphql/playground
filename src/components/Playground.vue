@@ -22,7 +22,10 @@
         v-model:value="state.variables"
       />
     </Container>
+
+    <div class="sm:w-1/2 h-0"/>
     <div class="sm:flex-break border-0 sm:border-r-1 border-red-700" />
+
     <Container
       title="Query Results">
       <CodeMirror
@@ -38,6 +41,8 @@
         :readonly="true"
       />
     </Container>
+
+    <div class="sm:w-1/2 h-0"/>
   </div>
 </template>
 

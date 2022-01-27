@@ -8,3 +8,9 @@ This project implements playground for testing, debugging and sharing Straberry 
 pnpm install
 pnpm dev
 ```
+
+## Deploy
+
+```
+pnpm deploy
+```
