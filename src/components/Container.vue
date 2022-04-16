@@ -4,10 +4,10 @@
     @click="toggle"
   >
     <div class="flex-1">
-      {{ props.title }}
+      {{ props.title }}
     </div>
     <div class="opacity-20 text-sm">
-      ({{ visible ? 'visible' : 'hidden' }})
+      ({{ visible ? 'visible' : 'hidden' }})
     </div>
   </div>
   <div class="flex-x sm:w-1/2 overflow-y-scroll" v-if="visible">

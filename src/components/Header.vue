@@ -46,9 +46,9 @@
 </template>
 
 <script setup>
-import { useStrawberryVersions } from '../utils/strawberry.js'
-import { ref } from 'vue'
-import { useClipboard } from '../utils/clipboard.js'
+import { useStrawberryVersions } from '../utils/strawberry.js'
+import { ref } from 'vue'
+import { useClipboard } from '../utils/clipboard.js'
 
 const props = defineProps(['state'])
 const { versions, fetchVersions } = useStrawberryVersions()

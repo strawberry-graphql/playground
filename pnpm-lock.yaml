@@ -11,6 +11,7 @@ specifiers:
   '@unocss/reset': ^0.11.2
   '@vitejs/plugin-vue': ^1.9.3
   jszip: ^3.7.1
+  to-semver: ^4.0.0
   typescript: ^4.4.3
   unocss: ^0.11.2
   unplugin-auto-import: ^0.4.14
@@ -30,6 +31,7 @@ dependencies:
   '@iconify/json': 1.1.436
   '@unocss/reset': 0.11.6
   jszip: 3.7.1
+  to-semver: 4.0.0
   unocss: 0.11.6
   unplugin-auto-import: 0.4.20_vite@2.6.14
   unplugin-icons: 0.12.22_vite@2.6.14
@@ -668,6 +670,13 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: false
+
+  /clean-semver/2.1.0:
+    resolution: {integrity: sha512-a5sIRLwP078fc3/AEDfSxD8GmMBJlxYCUnRfXjldyy9RjwXxNVuK9hLwDar4sceJhZp6G+66ukNZsVFIqN28jg==}
+    engines: {node: '>=10'}
+    dependencies:
+      semver: 7.3.5
     dev: false
 
   /colorette/2.0.16:
@@ -1633,6 +1642,14 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
+    dev: false
+
+  /to-semver/4.0.0:
+    resolution: {integrity: sha512-qARDZe0teB+/7EXkXE2cWnQddhLzunD72n+LGvSOHvti21kk9YHUSOjJpWDTLJ44MP7VNWFzo5n10PUwr2r3zA==}
+    engines: {node: '>=12'}
+    dependencies:
+      clean-semver: 2.1.0
+      semver: 7.3.5
     dev: false
 
   /token-stream/1.0.0:

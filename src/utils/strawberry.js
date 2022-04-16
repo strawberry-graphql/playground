@@ -1,5 +1,6 @@
-import { reactive, toRefs, unref, watch } from 'vue'
-import { initPyodide } from './pyodide.js'
+import { reactive, toRefs, unref, watch } from 'vue'
+import { initPyodide } from './pyodide.js'
+import toSemver from 'to-semver';
 
 const url = 'https://pypi.org/pypi/strawberry-graphql/json'
 
@@ -11,15 +12,15 @@ export const useStrawberryVersions = () => {
     }
     const rsp = await fetch(url)
     const data = await rsp.json()
-    const keys = Object.keys(data.releases)
-    keys.push('latest')
-    keys.reverse()
+    let keys = Object.keys(data.releases)
+    keys = toSemver(keys)
+    keys.unshift('latest')
     versions.value = keys
   }
   return { versions, fetchVersions }
 }
 
-export const useStrawberry = ({ code, query, variables, requirements }) => {
+export const useStrawberry = ({ code, query, variables, requirements }) => {
   const state = reactive({
     results: null,
     errors: null,
@@ -92,7 +93,7 @@ export const useStrawberry = ({ code, query, variables, requirements }) => {
       state.results = JSON.stringify(data, null, 2)
       results.destroy()
 
-    }, { immediate: true })
+    }, { immediate: true })
 
     state.loading = null
   }

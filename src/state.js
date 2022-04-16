@@ -1,5 +1,5 @@
 import { zip, unzip } from './utils/zip.js'
-import { watch } from 'vue'
+import { watch } from 'vue'
 
 import sampleRequirements from './samples/requirements.txt?raw'
 import sampleCode from './samples/schema.py?raw'
@@ -65,7 +65,7 @@ export const useState = () => {
     })
   })
 
-  const { code, query, variables } = toRefs(state)
+  const { code, query, variables } = toRefs(state)
   watch([ code, query, variables ], updateHash)
 
   return state

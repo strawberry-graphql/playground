@@ -11,7 +11,7 @@
 import 'uno.css'
 import '@unocss/reset/normalize.css'
 import { useState } from './state.js'
-import { useStrawberry } from './utils/strawberry.js'
+import { useStrawberry } from './utils/strawberry.js'
 
 const state = useState()
 const { results, errors, loading, schema, init } = useStrawberry(toRefs(state))

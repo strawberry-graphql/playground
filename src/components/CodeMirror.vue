@@ -9,7 +9,7 @@ import { indentUnit } from "@codemirror/language"
 import { indentWithTab } from "@codemirror/commands"
 import { python } from "@codemirror/lang-python"
 import { json } from "@codemirror/lang-json"
-import { debounce } from '../utils/debounce'
+import { debounce } from '../utils/debounce'
 
 const el = ref()
 
@@ -72,7 +72,7 @@ onMounted(() => {
 
     editor.dispatch({
       changes: { from: 0, to: editor.state.doc.length, insert: value }
-    }) 
+    })
   })
 })
 
