@@ -9,7 +9,9 @@ specifiers:
   '@codemirror/view': ^0.19.24
   '@iconify/json': ^1.1.435
   '@unocss/reset': ^0.11.2
+  '@urql/vue': ^0.6.1
   '@vitejs/plugin-vue': ^1.9.3
+  graphql: ^16.3.0
   jszip: ^3.7.1
   to-semver: ^4.0.0
   typescript: ^4.4.3
@@ -30,6 +32,8 @@ dependencies:
   '@codemirror/view': 0.19.24
   '@iconify/json': 1.1.436
   '@unocss/reset': 0.11.6
+  '@urql/vue': 0.6.1_graphql@16.3.0+vue@3.2.23
+  graphql: 16.3.0
   jszip: 3.7.1
   to-semver: 4.0.0
   unocss: 0.11.6
@@ -295,6 +299,14 @@ packages:
     resolution: {integrity: sha512-8HqW8EVqjnCmWXVpqAOZf+EGESdkR27odcMMMGefgKXtar00SoYNSryGv//TELI4T3QFsECo78p+0lmalk/CFA==}
     dev: true
 
+  /@graphql-typed-document-node/core/3.1.1_graphql@16.3.0:
+    resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.3.0
+    dev: false
+
   /@iconify/json/1.1.436:
     resolution: {integrity: sha512-6Ow34My7nxzA7ddhw8k/cMSivLikRM609buw/t+vmxMLuGIyJhYflksOLOIUernAm3zKXBu6k1GxInj9a3LGrQ==}
     dev: false
@@ -439,6 +451,28 @@ packages:
       '@unocss/core': 0.11.6
       '@unocss/inspector': 0.11.6
       '@unocss/scope': 0.11.6
+    dev: false
+
+  /@urql/core/2.4.4_graphql@16.3.0:
+    resolution: {integrity: sha512-TD+OS7jG1Ts6QkpU0TZ85i/vu40r71GF0QQFDhnWFtgkHcNwnpkIwWBMa72AR3j2imBTPpk61e/xb39uM/t37A==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@graphql-typed-document-node/core': 3.1.1_graphql@16.3.0
+      graphql: 16.3.0
+      wonka: 4.0.15
+    dev: false
+
+  /@urql/vue/0.6.1_graphql@16.3.0+vue@3.2.23:
+    resolution: {integrity: sha512-sQMWiPMDGpCP+ybF4eMWyR4JXK6U2Fn9KsmdXnP8wRJiUdON+RVIkr44aulcF4yjdCRl0PeQjZAG+0h6HmYdag==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      vue: ^3.0.0
+    dependencies:
+      '@urql/core': 2.4.4_graphql@16.3.0
+      graphql: 16.3.0
+      vue: 3.2.23
+      wonka: 4.0.15
     dev: false
 
   /@vitejs/plugin-vue/1.10.1_vite@2.6.14:
@@ -1035,6 +1069,11 @@ packages:
       minimatch: 3.0.4
       once: 1.4.0
       path-is-absolute: 1.0.1
+    dev: false
+
+  /graphql/16.3.0:
+    resolution: {integrity: sha512-xm+ANmA16BzCT5pLjuXySbQVFwH3oJctUVdy81w1sV0vBU0KgDdBGtxQOUd5zqOBk/JayAFeG8Dlmeq74rjm/A==}
+    engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
     dev: false
 
   /gzip-size/6.0.0:
@@ -1984,6 +2023,10 @@ packages:
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5
     dev: true
+
+  /wonka/4.0.15:
+    resolution: {integrity: sha512-U0IUQHKXXn6PFo9nqsHphVCE5m3IntqZNB9Jjn7EB1lrR7YTDY3YWgFvEvwniTzXSvOH/XMzAZaIfJF/LvHYXg==}
+    dev: false
 
   /wrappy/1.0.2:
     resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
