@@ -15,5 +15,5 @@ provideClient(client);
 
 const params = new URLSearchParams(window.location.search);
 const gistId = params.get("gist")
-const version = params.get("version") || 'latest'
+const version = params.get("version")
 </script>

@@ -34,16 +34,12 @@
 <script setup>
 import { useQuery } from '@urql/vue';
 import { useStrawberry } from '../utils/strawberry.js'
-import sampleRequirements from '../samples/requirements.txt?raw'
 import sampleCode from '../samples/schema.py?raw'
 import sampleQuery from '../samples/query.gql?raw'
 import sampleVariables from '../samples/variables.json?raw'
 import { reactive } from 'vue';
 
 const { id, version } = defineProps(['id', 'version'])
-
-// const state = reactive({  })
-let strawberryVersion = reactive('latest')
 
 const result = useQuery({
   query: `
@@ -61,21 +57,33 @@ const result = useQuery({
   pause: !id,
 });
 
-const requirements = version === 'latest' ? 'strawberry-graphql' : `strawberry-graphql==${version}`
+const requirements = !version || version === 'latest' ? 'strawberry-graphql' : `strawberry-graphql==${version}`
 
 const loading = id ? result.fetching : false
 
-const data = reactive({
+let data = reactive({
   id: null,
   query: sampleQuery,
   code: sampleCode,
   variables: JSON.parse(sampleVariables),
   requirements,
-  version,
+  version: version !== null ? version : 'latest',
 })
 
 watch(result.data, (d) => {
-  data.value = d.gist
+  if (d.gist) {
+    data.id = d.gist.id
+    data.query = d.gist.query
+    data.code = d.gist.code
+    data.variables = d.gist.variables
+    data.requirements = d.gist.requirements
+
+    if (!version) {
+      const requirementsParts = d.gist.requirements.split('==')
+
+      data.version = requirementsParts.length > 1 ? requirementsParts[1] : 'latest'
+    }
+  }
 })
 
 const { init, schema, results, errors, loading: pyodideLoading } = useStrawberry(data)
@@ -84,13 +92,16 @@ watch(() => data.version, (version, oldVersion) => {
   if (version === oldVersion) return
 
   const params = new URLSearchParams(window.location.search);
-  params.set("version", version);
 
-  if (data.id) {
-    params.set("gist", data.id);
+  if (version === 'latest') {
+    params.delete('version')
+  } else {
+    params.set('version', version)
   }
 
-  window.location.href = `?${params.toString()}`
+  const qs = params.toString()
+
+  window.location.href = qs ? `/?${qs}` : '/'
 })
 
 init()
