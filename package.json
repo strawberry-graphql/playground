@@ -16,7 +16,6 @@
     "@codemirror/view": "^0.19.24",
     "@iconify/json": "^1.1.435",
     "@unocss/reset": "^0.11.2",
-    "@urql/vue": "^0.6.1",
     "graphql": "^16.3.0",
     "jszip": "^3.7.1",
     "to-semver": "^4.0.0",
@@ -24,6 +23,7 @@
     "unplugin-auto-import": "^0.4.14",
     "unplugin-icons": "^0.12.22",
     "unplugin-vue-components": "^0.17.2",
+    "villus": "^1.0.1",
     "vue": "^3.2.16"
   },
   "devDependencies": {

@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { useMutation } from '@urql/vue';
+import { useMutation } from 'villus';
 
 import { useStrawberryVersions } from '../utils/strawberry.js'
 import { useClipboard } from '../utils/clipboard.js'
@@ -44,7 +44,7 @@ const shareUrl = async () => {
   // alert('Playground url copied to clipboard')
 }
 
-const createGistResult = useMutation(`
+const {data, execute} = useMutation(`
   mutation CreateGist($input: CreateGistInput!) {
     createGist(input: $input) {
       __typename
@@ -64,7 +64,7 @@ const createGist = () => {
     },
   };
 
-  return createGistResult.executeMutation(variables).then(result => {
+  return execute(variables).then(result => {
     if (result.error) {
       console.error('Oh no!', result.error);
     } else {

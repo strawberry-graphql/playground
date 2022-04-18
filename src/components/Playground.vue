@@ -32,7 +32,8 @@
 </template>
 
 <script setup>
-import { useQuery } from '@urql/vue';
+import { useQuery } from 'villus';
+
 import { useStrawberry } from '../utils/strawberry.js'
 import sampleCode from '../samples/schema.py?raw'
 import sampleQuery from '../samples/query.gql?raw'
@@ -42,13 +43,12 @@ import { reactive } from 'vue';
 const props = defineProps(['id', 'version'])
 const version = props.version || 'latest'
 
-const id = unref(props.id)
+const id = props.id;
 
 const result = useQuery({
   query: `
     query GetGist($id: ID!) {
       gist(id: $id) {
-        __typename
         id
         query
         code: schema
@@ -63,7 +63,7 @@ const result = useQuery({
 
 const requirements = version === 'latest' ? 'strawberry-graphql' : `strawberry-graphql==${version}`
 
-const loading = id ? result.fetching : false
+const loading = id ? result.isFetching : false
 
 let data = reactive({
   id,
@@ -77,7 +77,6 @@ let data = reactive({
 console.log(requirements)
 
 watch(result.data, (d) => {
-  console.log('data update for some reason')
   if (d.gist) {
     data.id = d.gist.id
     data.query = d.gist.query

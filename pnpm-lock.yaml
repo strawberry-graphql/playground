@@ -9,7 +9,6 @@ specifiers:
   '@codemirror/view': ^0.19.24
   '@iconify/json': ^1.1.435
   '@unocss/reset': ^0.11.2
-  '@urql/vue': ^0.6.1
   '@vitejs/plugin-vue': ^1.9.3
   graphql: ^16.3.0
   jszip: ^3.7.1
@@ -19,6 +18,7 @@ specifiers:
   unplugin-auto-import: ^0.4.14
   unplugin-icons: ^0.12.22
   unplugin-vue-components: ^0.17.2
+  villus: ^1.0.1
   vite: ^2.6.4
   vue: ^3.2.16
   vue-tsc: ^0.3.0
@@ -32,7 +32,6 @@ dependencies:
   '@codemirror/view': 0.19.24
   '@iconify/json': 1.1.436
   '@unocss/reset': 0.11.6
-  '@urql/vue': 0.6.1_graphql@16.3.0+vue@3.2.23
   graphql: 16.3.0
   jszip: 3.7.1
   to-semver: 4.0.0
@@ -40,6 +39,7 @@ dependencies:
   unplugin-auto-import: 0.4.20_vite@2.6.14
   unplugin-icons: 0.12.22_vite@2.6.14
   unplugin-vue-components: 0.17.2_vite@2.6.14+vue@3.2.23
+  villus: 1.0.1_graphql@16.3.0+vue@3.2.23
   vue: 3.2.23
 
 devDependencies:
@@ -299,14 +299,6 @@ packages:
     resolution: {integrity: sha512-8HqW8EVqjnCmWXVpqAOZf+EGESdkR27odcMMMGefgKXtar00SoYNSryGv//TELI4T3QFsECo78p+0lmalk/CFA==}
     dev: true
 
-  /@graphql-typed-document-node/core/3.1.1_graphql@16.3.0:
-    resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
-    peerDependencies:
-      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-    dependencies:
-      graphql: 16.3.0
-    dev: false
-
   /@iconify/json/1.1.436:
     resolution: {integrity: sha512-6Ow34My7nxzA7ddhw8k/cMSivLikRM609buw/t+vmxMLuGIyJhYflksOLOIUernAm3zKXBu6k1GxInj9a3LGrQ==}
     dev: false
@@ -451,28 +443,6 @@ packages:
       '@unocss/core': 0.11.6
       '@unocss/inspector': 0.11.6
       '@unocss/scope': 0.11.6
-    dev: false
-
-  /@urql/core/2.4.4_graphql@16.3.0:
-    resolution: {integrity: sha512-TD+OS7jG1Ts6QkpU0TZ85i/vu40r71GF0QQFDhnWFtgkHcNwnpkIwWBMa72AR3j2imBTPpk61e/xb39uM/t37A==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-    dependencies:
-      '@graphql-typed-document-node/core': 3.1.1_graphql@16.3.0
-      graphql: 16.3.0
-      wonka: 4.0.15
-    dev: false
-
-  /@urql/vue/0.6.1_graphql@16.3.0+vue@3.2.23:
-    resolution: {integrity: sha512-sQMWiPMDGpCP+ybF4eMWyR4JXK6U2Fn9KsmdXnP8wRJiUdON+RVIkr44aulcF4yjdCRl0PeQjZAG+0h6HmYdag==}
-    peerDependencies:
-      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-      vue: ^3.0.0
-    dependencies:
-      '@urql/core': 2.4.4_graphql@16.3.0
-      graphql: 16.3.0
-      vue: 3.2.23
-      wonka: 4.0.15
     dev: false
 
   /@vitejs/plugin-vue/1.10.1_vite@2.6.14:
@@ -1833,6 +1803,16 @@ packages:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
     dev: false
 
+  /villus/1.0.1_graphql@16.3.0+vue@3.2.23:
+    resolution: {integrity: sha512-mBjUO2UJjKBEZu1eQfa8BNLkGNPEN6cRtIBRFQNQA0i403NxFMT8kS4jdCGu6nRfk8sTQkhPhehMHRJjUptkSQ==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      vue: ^3.0.0
+    dependencies:
+      graphql: 16.3.0
+      vue: 3.2.23
+    dev: false
+
   /vite/2.6.14:
     resolution: {integrity: sha512-2HA9xGyi+EhY2MXo0+A2dRsqsAG3eFNEVIo12olkWhOmc8LfiM+eMdrXf+Ruje9gdXgvSqjLI9freec1RUM5EA==}
     engines: {node: '>=12.2.0'}
@@ -2023,10 +2003,6 @@ packages:
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5
     dev: true
-
-  /wonka/4.0.15:
-    resolution: {integrity: sha512-U0IUQHKXXn6PFo9nqsHphVCE5m3IntqZNB9Jjn7EB1lrR7YTDY3YWgFvEvwniTzXSvOH/XMzAZaIfJF/LvHYXg==}
-    dev: false
 
   /wrappy/1.0.2:
     resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
