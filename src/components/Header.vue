@@ -8,12 +8,12 @@
       <div>
         <select
           class="w-30"
-          v-model="props.state.strawberryVersion"
+          v-model="props.state.version"
           @mouseover="fetchVersions"
           @blur="fetchVersion"
         >
           <option
-            v-for="version in (versions || [props.state.strawberryVersion])"
+            v-for="version in (versions || [props.state.version])"
             :key="version"
           >{{ version }}</option>
         </select>
@@ -47,7 +47,6 @@
 
 <script setup>
 import { useStrawberryVersions } from '../utils/strawberry.js'
-import { ref } from 'vue'
 import { useClipboard } from '../utils/clipboard.js'
 
 const props = defineProps(['state'])

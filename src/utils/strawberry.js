@@ -15,7 +15,7 @@ export const useStrawberryVersions = () => {
     let keys = Object.keys(data.releases);
     keys = toSemver(keys);
     keys.unshift("latest");
-    versions.value = keys;
+    versions.value =  [...new Set(keys)];
   };
   return { versions, fetchVersions };
 };

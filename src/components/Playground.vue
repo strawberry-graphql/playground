@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading" class="absolute inset-0 flex flex-col font-sans">
-    <Header :state="state" />
+    <Header :state="data" />
     <div class="flex flex-col flex-wrap flex-1 items-stretch border-0 border-b-1 border-red-700">
       <Container title="Strawberry Schema">
         <CodeMirror mode="python" v-model:value="data.code" :indent="4" />
@@ -25,7 +25,7 @@
       <div class="sm:w-1/2 h-0" />
     </div>
 
-    <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" />
+    <!-- <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" /> -->
 
     <Loading :loading="pyodideLoading" />
   </div>
@@ -38,12 +38,12 @@ import sampleRequirements from '../samples/requirements.txt?raw'
 import sampleCode from '../samples/schema.py?raw'
 import sampleQuery from '../samples/query.gql?raw'
 import sampleVariables from '../samples/variables.json?raw'
+import { reactive } from 'vue';
 
-const { id } = defineProps(['id'])
+const { id, version } = defineProps(['id', 'version'])
 
-console.log(sampleRequirements)
-
-const state = {}
+// const state = reactive({  })
+let strawberryVersion = reactive('latest')
 
 const result = useQuery({
   query: `
@@ -61,13 +61,17 @@ const result = useQuery({
   pause: !id,
 });
 
+const requirements = version === 'latest' ? 'strawberry-graphql' : `strawberry-graphql==${version}`
+
 const loading = id ? result.fetching : false
-const data = ref({
+
+const data = reactive({
   id: null,
   query: sampleQuery,
   code: sampleCode,
   variables: JSON.parse(sampleVariables),
-  requirements: sampleRequirements,
+  requirements,
+  version,
 })
 
 watch(result.data, (d) => {
@@ -76,6 +80,18 @@ watch(result.data, (d) => {
 
 const { init, schema, results, loading: pyodideLoading } = useStrawberry(data)
 
-// TODO: listen to version update
+watch(() => data.version, (version, oldVersion) => {
+  if (version === oldVersion) return
+
+  const params = new URLSearchParams(window.location.search);
+  params.set("version", version);
+
+  if (data.id) {
+    params.set("gist", data.id);
+  }
+
+  window.location.href = `?${params.toString()}`
+})
+
 init()
 </script>

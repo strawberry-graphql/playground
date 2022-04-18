@@ -1,5 +1,5 @@
 <template>
-  <Playground class="flex-1" :id="gistId" />
+  <Playground class="flex-1" :id="gistId" :version="version" />
 </template>
 
 <script setup>
@@ -15,4 +15,5 @@ provideClient(client);
 
 const params = new URLSearchParams(window.location.search);
 const gistId = params.get("gist")
+const version = params.get("version") || 'latest'
 </script>
