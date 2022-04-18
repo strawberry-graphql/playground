@@ -37,9 +37,10 @@ const { versions, fetchVersions } = useStrawberryVersions()
 
 const { writeText } = useClipboard()
 
-const shareUrl = () => {
-  createGist()
-  // writeText(window.location.href)
+const shareUrl = async () => {
+  const id = await createGist()
+
+  writeText(window.location.href)
   // alert('Playground url copied to clipboard')
 }
 
@@ -63,7 +64,7 @@ const createGist = () => {
     },
   };
 
-  createGistResult.executeMutation(variables).then(result => {
+  return createGistResult.executeMutation(variables).then(result => {
     if (result.error) {
       console.error('Oh no!', result.error);
     } else {
@@ -72,6 +73,8 @@ const createGist = () => {
       params.set('gist', result.data.createGist.id);
 
       history.pushState(null, null, `?${params.toString()}`);
+
+      return result.data.createGist.id;
     }
   });
 }
