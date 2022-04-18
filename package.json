@@ -14,6 +14,8 @@
     "@codemirror/lang-python": "^0.19.2",
     "@codemirror/language": "^0.19.6",
     "@codemirror/view": "^0.19.24",
+    "@headlessui/vue": "^1.5.0",
+    "@heroicons/vue": "^1.0.6",
     "@iconify/json": "^1.1.435",
     "@unocss/reset": "^0.11.2",
     "graphql": "^16.3.0",

@@ -10,7 +10,7 @@
           <option v-for="version in (versions || [props.state.version])" :key="version">{{ version }}</option>
         </select>
       </div>
-      <a class="text-red-700 hover:opacity-70 no-underline cursor-pointer" @click.prevent="shareUrl"
+      <a class="text-red-700 hover:opacity-70 no-underline cursor-pointer" @click.prevent="share"
         title="Share playground url">
         <i-mdi-share-variant class="text-lg" />
       </a>
@@ -24,27 +24,21 @@
       </a>
     </div>
   </div>
+  <share-modal :loading="isFetching" :open="modalOpen" :url="shareUrl" />
 </template>
 
 <script setup>
 import { useMutation } from 'villus';
 
 import { useStrawberryVersions } from '../utils/strawberry.js'
-import { useClipboard } from '../utils/clipboard.js'
 
 const props = defineProps(['state'])
 const { versions, fetchVersions } = useStrawberryVersions()
 
-const { writeText } = useClipboard()
+const modalOpen = ref(false)
+let shareUrl = ref("loading...")
 
-const shareUrl = async () => {
-  const id = await createGist()
-
-  writeText(window.location.href)
-  // alert('Playground url copied to clipboard')
-}
-
-const {data, execute} = useMutation(`
+const { data, execute, isFetching } = useMutation(`
   mutation CreateGist($input: CreateGistInput!) {
     createGist(input: $input) {
       __typename
@@ -53,8 +47,18 @@ const {data, execute} = useMutation(`
   }
 `);
 
+const share = async () => {
+  if (isFetching.value) {
+    return
+  }
+
+console.log('should be open now')
+  modalOpen.value = true
+
+  await createGist()
+}
+
 const createGist = () => {
-  // TODO: loading state, copy to clipboard?
   const variables = {
     input: {
       query: props.state.query,
@@ -69,12 +73,11 @@ const createGist = () => {
       console.error('Oh no!', result.error);
     } else {
       const params = new URLSearchParams(window.location.search);
-
       params.set('gist', result.data.createGist.id);
 
       history.pushState(null, null, `?${params.toString()}`);
 
-      return result.data.createGist.id;
+      shareUrl.value = window.location.href
     }
   });
 }
