@@ -25,7 +25,7 @@
       <div class="sm:w-1/2 h-0" />
     </div>
 
-    <!-- <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" /> -->
+    <ErrorContainer class="max-h-5em sm:max-h-10em" :errors="errors" />
 
     <Loading :loading="pyodideLoading" />
   </div>
@@ -78,7 +78,7 @@ watch(result.data, (d) => {
   data.value = d.gist
 })
 
-const { init, schema, results, loading: pyodideLoading } = useStrawberry(data)
+const { init, schema, results, errors, loading: pyodideLoading } = useStrawberry(data)
 
 watch(() => data.version, (version, oldVersion) => {
   if (version === oldVersion) return
