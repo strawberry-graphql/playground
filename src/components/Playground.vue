@@ -39,12 +39,16 @@ import sampleQuery from '../samples/query.gql?raw'
 import sampleVariables from '../samples/variables.json?raw'
 import { reactive } from 'vue';
 
-const { id, version } = defineProps(['id', 'version'])
+const props = defineProps(['id', 'version'])
+const version = props.version || 'latest'
+
+const id = unref(props.id)
 
 const result = useQuery({
   query: `
     query GetGist($id: ID!) {
       gist(id: $id) {
+        __typename
         id
         query
         code: schema
@@ -53,24 +57,27 @@ const result = useQuery({
       }
     }
   `,
-  variables: { id },
+  variables: { id: id },
   pause: !id,
 });
 
-const requirements = !version || version === 'latest' ? 'strawberry-graphql' : `strawberry-graphql==${version}`
+const requirements = version === 'latest' ? 'strawberry-graphql' : `strawberry-graphql==${version}`
 
 const loading = id ? result.fetching : false
 
 let data = reactive({
-  id: null,
+  id,
   query: sampleQuery,
   code: sampleCode,
   variables: JSON.parse(sampleVariables),
   requirements,
-  version: version !== null ? version : 'latest',
+  version,
 })
 
+console.log(requirements)
+
 watch(result.data, (d) => {
+  console.log('data update for some reason')
   if (d.gist) {
     data.id = d.gist.id
     data.query = d.gist.query
