@@ -26,8 +26,8 @@
     </div>
 
     <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" />
-    <!-- TODO: bring back loading, but keep the UI working -->
-    <!-- <Loading :loading="loading" /> -->
+
+    <Loading :loading="pyodideLoading" />
   </div>
 </template>
 
@@ -74,7 +74,7 @@ watch(result.data, (d) => {
   data.value = d.gist
 })
 
-const { init, schema, results } = useStrawberry(data)
+const { init, schema, results, loading: pyodideLoading } = useStrawberry(data)
 
 // TODO: listen to version update
 init()
