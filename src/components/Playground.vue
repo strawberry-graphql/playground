@@ -69,19 +69,17 @@ let data = reactive({
   id,
   query: sampleQuery,
   code: sampleCode,
-  variables: JSON.parse(sampleVariables),
+  variables: sampleVariables,
   requirements,
   version,
 })
-
-console.log(requirements)
 
 watch(result.data, (d) => {
   if (d.gist) {
     data.id = d.gist.id
     data.query = d.gist.query
     data.code = d.gist.code
-    data.variables = d.gist.variables
+    data.variables = JSON.stringify(d.gist.variables, null, 2)
     data.requirements = d.gist.requirements
 
     if (!version) {

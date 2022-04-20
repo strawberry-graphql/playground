@@ -71,7 +71,7 @@ export const useStrawberry = (data) => {
         let pyVariables = {};
 
         try {
-          pyVariables = pyodide.toPy(variables);
+          pyVariables = pyodide.toPy(JSON.parse(variables));
         } catch (err) {
           state.results = null;
           state.errors = `${err.name}: ${err.message}`;
