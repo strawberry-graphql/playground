@@ -1,27 +1,17 @@
 <template>
-  <div class="absolute inset-0 flex flex-col font-sans">
-    <Header :state="state" />
-    <Playground class="flex-1" :state="state" />
-    <ErrorContainer class="max-h-5em sm:max-h-10em" :state="state" />
-    <Loading :loading="state.loading" />
-  </div>
+  <Playground class="flex-1" :id="gistId" :version="version" />
 </template>
 
 <script setup>
 import 'uno.css'
 import '@unocss/reset/normalize.css'
-import { useState } from './state.js'
-import { useStrawberry } from './utils/strawberry.js'
+import { useClient } from 'villus';
 
-const state = useState()
-const { results, errors, loading, schema, init } = useStrawberry(toRefs(state))
-watch(() => state.strawberryVersion, (version, oldVersion) => {
-  if (version && !oldVersion) {
-    init()
-  }
-})
-state.results = results
-state.errors = errors
-state.loading = loading
-state.schema = schema
+useClient({
+  url: 'https://api.strawberry.rocks/graphql',
+});
+
+const params = new URLSearchParams(window.location.search);
+const gistId = params.get("gist")
+const version = params.get("version")
 </script>

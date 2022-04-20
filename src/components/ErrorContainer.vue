@@ -5,6 +5,5 @@
 </template>
 
 <script setup>
-const props = defineProps(['state'])
-const errors = computed(() => props.state.errors)
+const { errors } = defineProps(['errors'])
 </script>

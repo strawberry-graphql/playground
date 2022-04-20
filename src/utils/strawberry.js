@@ -1,105 +1,113 @@
-import { reactive, toRefs, unref, watch } from 'vue'
-import { initPyodide } from './pyodide.js'
-import toSemver from 'to-semver';
+import { reactive, toRefs, unref, watch } from "vue";
+import { initPyodide } from "./pyodide.js";
+import toSemver from "to-semver";
 
-const url = 'https://pypi.org/pypi/strawberry-graphql/json'
+const url = "https://pypi.org/pypi/strawberry-graphql/json";
 
 export const useStrawberryVersions = () => {
-  const versions = ref()
+  const versions = ref();
   const fetchVersions = async () => {
     if (versions.value) {
-      return
+      return;
     }
-    const rsp = await fetch(url)
-    const data = await rsp.json()
-    let keys = Object.keys(data.releases)
-    keys = toSemver(keys)
-    keys.unshift('latest')
-    versions.value = keys
-  }
-  return { versions, fetchVersions }
-}
+    const rsp = await fetch(url);
+    const data = await rsp.json();
+    let keys = Object.keys(data.releases);
+    keys = toSemver(keys);
+    keys.unshift("latest");
+    versions.value =  [...new Set(keys)];
+  };
+  return { versions, fetchVersions };
+};
 
-export const useStrawberry = ({ code, query, variables, requirements }) => {
+export const useStrawberry = (data) => {
   const state = reactive({
     results: null,
     errors: null,
     loading: [],
     schema: null,
-  })
+  });
 
   const init = async () => {
-    const packages = unref(requirements).split('\n')
-    console.log('packages', packages)
+    const packages = unref(data).requirements.trim().split("\n");
 
     const pyodide = await initPyodide({
       packages,
-      logging: (str) => state.loading.push(str)
-    })
-    window.pyodide = pyodide
+      logging: (str) => state.loading.push(str),
+    });
 
-    watch([code, query, variables], async ([code, query, variables]) => {
-      state.errors = null
-      state.schema = null
+    window.pyodide = pyodide;
 
-      //const globals = pyodide.toPy({})
-      const globals = pyodide.globals
-      globals.set('schema', null)
+    watch(
+      data,
+      async (dataRef) => {
+        const { code, query, variables } = unref(dataRef);
 
-      // exeute python code
-      try {
-        pyodide.runPython(code, globals)
-      } catch(err) {
-        state.results = null
-        state.errors = err.message
-        return
-      }
+        state.errors = null;
+        state.schema = null;
 
-      // get and store schema
-      const schema = globals.get('schema')
-      if (typeof schema === 'undefined') {
-        state.results = null
-        state.errors = "NameError: name 'schema' is not defined"
-        return
-      }
-      state.schema = schema.__str__()
+        const globals = pyodide.globals;
+        globals.set("schema", null);
 
-      // parse variables
-      try {
-        variables = pyodide.toPy(JSON.parse(variables))
-      } catch (err) {
-        state.results = null
-        state.errors = `${err.name}: ${err.message}`
-        schema.destroy()
-        return
-      }
+        try {
+          pyodide.runPython(code, globals);
+        } catch (err) {
 
-      // execute query
-      const results = await schema.execute(query, variables)
-      //const results = schema.execute_sync(query, variables)
-      schema.destroy()
+          state.results = null;
+          state.errors = err.message;
+          return;
+        }
 
-      // check errors
-      if (results.errors) {
-        state.results = null
-        const errors = results.errors.toJs()
-        state.errors = errors.map((e) => e.__str__()).join('\n')
-        results.destroy()
-        return
-      }
+        // get and store schema
+        const schema = globals.get("schema");
+        if (typeof schema === "undefined") {
+          state.results = null;
+          state.errors = "NameError: name 'schema' is not defined";
 
-      // store results
-      const data = results.data.toJs({ dict_converter: Object.fromEntries })
-      state.results = JSON.stringify(data, null, 2)
-      results.destroy()
+          return;
+        }
+        state.schema = schema.__str__();
 
-    }, { immediate: true })
+        let pyVariables = {};
 
-    state.loading = null
-  }
+        try {
+          pyVariables = pyodide.toPy(variables);
+        } catch (err) {
+          state.results = null;
+          state.errors = `${err.name}: ${err.message}`;
+          schema.destroy();
+          return;
+        }
+
+        // execute query
+        const results = await schema.execute(query, pyVariables);
+
+        schema.destroy();
+
+        // check errors
+        if (results.errors) {
+          state.results = null;
+          const errors = results.errors.toJs();
+          state.errors = errors.map((e) => e.__str__()).join("\n");
+          results.destroy();
+          return;
+        }
+
+        // store results
+        const result = results.data.toJs({
+          dict_converter: Object.fromEntries,
+        });
+        state.results = JSON.stringify(result, null, 2);
+        results.destroy();
+      },
+      { immediate: true, deep: true }
+    );
+
+    state.loading = null;
+  };
 
   return {
     ...toRefs(state),
     init,
-  }
-}
+  };
+};

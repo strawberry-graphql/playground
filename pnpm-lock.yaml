@@ -7,9 +7,12 @@ specifiers:
   '@codemirror/lang-python': ^0.19.2
   '@codemirror/language': ^0.19.6
   '@codemirror/view': ^0.19.24
+  '@headlessui/vue': ^1.5.0
+  '@heroicons/vue': ^1.0.6
   '@iconify/json': ^1.1.435
   '@unocss/reset': ^0.11.2
   '@vitejs/plugin-vue': ^1.9.3
+  graphql: ^16.3.0
   jszip: ^3.7.1
   to-semver: ^4.0.0
   typescript: ^4.4.3
@@ -17,6 +20,7 @@ specifiers:
   unplugin-auto-import: ^0.4.14
   unplugin-icons: ^0.12.22
   unplugin-vue-components: ^0.17.2
+  villus: ^1.0.1
   vite: ^2.6.4
   vue: ^3.2.16
   vue-tsc: ^0.3.0
@@ -28,14 +32,18 @@ dependencies:
   '@codemirror/lang-python': 0.19.2
   '@codemirror/language': 0.19.6
   '@codemirror/view': 0.19.24
+  '@headlessui/vue': 1.5.0_vue@3.2.23
+  '@heroicons/vue': 1.0.6_vue@3.2.23
   '@iconify/json': 1.1.436
   '@unocss/reset': 0.11.6
+  graphql: 16.3.0
   jszip: 3.7.1
   to-semver: 4.0.0
   unocss: 0.11.6
   unplugin-auto-import: 0.4.20_vite@2.6.14
   unplugin-icons: 0.12.22_vite@2.6.14
   unplugin-vue-components: 0.17.2_vite@2.6.14+vue@3.2.23
+  villus: 1.0.1_graphql@16.3.0+vue@3.2.23
   vue: 3.2.23
 
 devDependencies:
@@ -294,6 +302,23 @@ packages:
   /@emmetio/scanner/1.0.0:
     resolution: {integrity: sha512-8HqW8EVqjnCmWXVpqAOZf+EGESdkR27odcMMMGefgKXtar00SoYNSryGv//TELI4T3QFsECo78p+0lmalk/CFA==}
     dev: true
+
+  /@headlessui/vue/1.5.0_vue@3.2.23:
+    resolution: {integrity: sha512-jAp6XYpqdEv32xhszaj5ejvjaX5qhu20sCbxu7lplePEfZL+4ffabivJBBTZAiPWczqAXmnZWNWG5DOyqjRa4w==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.2.23
+    dev: false
+
+  /@heroicons/vue/1.0.6_vue@3.2.23:
+    resolution: {integrity: sha512-ng2YcCQrdoQWEFpw+ipFl2rZo8mZ56v0T5+MyfQQvNqfKChwgP6DMloZLW+rl17GEcHkE3H82UTAMKBKZr4+WA==}
+    peerDependencies:
+      vue: '>= 3'
+    dependencies:
+      vue: 3.2.23
+    dev: false
 
   /@iconify/json/1.1.436:
     resolution: {integrity: sha512-6Ow34My7nxzA7ddhw8k/cMSivLikRM609buw/t+vmxMLuGIyJhYflksOLOIUernAm3zKXBu6k1GxInj9a3LGrQ==}
@@ -1035,6 +1060,11 @@ packages:
       minimatch: 3.0.4
       once: 1.4.0
       path-is-absolute: 1.0.1
+    dev: false
+
+  /graphql/16.3.0:
+    resolution: {integrity: sha512-xm+ANmA16BzCT5pLjuXySbQVFwH3oJctUVdy81w1sV0vBU0KgDdBGtxQOUd5zqOBk/JayAFeG8Dlmeq74rjm/A==}
+    engines: {node: ^12.22.0 || ^14.16.0 || >=16.0.0}
     dev: false
 
   /gzip-size/6.0.0:
@@ -1792,6 +1822,16 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    dev: false
+
+  /villus/1.0.1_graphql@16.3.0+vue@3.2.23:
+    resolution: {integrity: sha512-mBjUO2UJjKBEZu1eQfa8BNLkGNPEN6cRtIBRFQNQA0i403NxFMT8kS4jdCGu6nRfk8sTQkhPhehMHRJjUptkSQ==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      vue: ^3.0.0
+    dependencies:
+      graphql: 16.3.0
+      vue: 3.2.23
     dev: false
 
   /vite/2.6.14:
