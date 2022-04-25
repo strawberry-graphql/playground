@@ -63,8 +63,6 @@ const { writeText } = useClipboard()
 const copied = ref(false);
 
 const copyUrl = () => {
-    console.log(props.url)
-
     writeText(props.url)
 
     copied.value = true;

@@ -63,7 +63,7 @@ const createGist = () => {
     input: {
       query: props.state.query,
       schema: props.state.code,
-      variables: props.state.variables,
+      variables: JSON.parse(props.state.variables),
       requirements: props.state.requirements,
     },
   };
