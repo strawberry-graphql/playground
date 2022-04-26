@@ -14,7 +14,7 @@
         title="Share playground url">
         <i-mdi-share-variant class="text-lg" />
       </a>
-      <a class="text-red-700 hover:opacity-70 no-underline" href="https://github.com/la4de/strawberry-playground"
+      <a class="text-red-700 hover:opacity-70 no-underline" href="https://github.com/strawberry-graphql/playground"
         target="_blank" title="Go to github repository">
         <i-mdi-github class="text-xl" />
       </a>
