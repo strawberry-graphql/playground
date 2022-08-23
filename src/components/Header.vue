@@ -35,6 +35,8 @@ import { useStrawberryVersions } from '../utils/strawberry.js'
 const props = defineProps(['state'])
 const { versions, fetchVersions } = useStrawberryVersions()
 
+console.log('versions', versions)
+
 const modalOpen = ref(false)
 let shareUrl = ref("loading...")
 

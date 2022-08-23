@@ -13,9 +13,10 @@ export const useStrawberryVersions = () => {
     const rsp = await fetch(url);
     const data = await rsp.json();
     let keys = Object.keys(data.releases);
-    keys = toSemver(keys);
+    keys = toSemver(keys, { includePrereleases: true, clean: false });
+    console.log("keys", keys);
     keys.unshift("latest");
-    versions.value =  [...new Set(keys)];
+    versions.value = [...new Set(keys)];
   };
   return { versions, fetchVersions };
 };
@@ -43,15 +44,34 @@ export const useStrawberry = (data) => {
       async (dataRef) => {
         const { code, query, variables } = unref(dataRef);
 
+        window.__source = code;
+
         state.errors = null;
         state.schema = null;
 
         const globals = pyodide.globals;
         globals.set("schema", null);
+        pyodide.runPython(`
+        def reformat_exception():
+
+            from traceback import format_exception
+            # Format a modified exception here
+            # this just prints it normally but you could for instance filter some frames
+            print(sys.last_value)
+            print(dir(sys.last_value))
+
+            return "".join(
+                format_exception(sys.last_type, sys.last_value, sys.last_traceback)
+            )
+        `);
+
+        let reformat_exception = pyodide.globals.get("reformat_exception");
+
 
         try {
           pyodide.runPython(code, globals);
         } catch (err) {
+          console.log(reformat_exception());
 
           state.results = null;
           state.errors = err.message;
