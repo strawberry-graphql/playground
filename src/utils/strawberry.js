@@ -86,18 +86,18 @@ export const useStrawberry = (data) => {
 
         // check errors
         if (results.errors) {
-          state.results = null;
           const errors = results.errors.toJs();
           state.errors = errors.map((e) => e.__str__()).join("\n");
-          results.destroy();
-          return;
         }
 
         // store results
-        const result = results.data.toJs({
-          dict_converter: Object.fromEntries,
-        });
-        state.results = JSON.stringify(result, null, 2);
+        if (results.data) {
+          const result = results.data.toJs({
+            dict_converter: Object.fromEntries,
+          });
+          state.results = JSON.stringify(result, null, 2);
+        }
+
         results.destroy();
       },
       { immediate: true, deep: true }
