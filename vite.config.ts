@@ -11,7 +11,7 @@ export default defineConfig({
           {
             name: "Satoshi",
             local: "Satoshi",
-            src: "./Satoshi-*.ttf",
+            src: "./fonts/Satoshi-*.ttf",
 
             transform(font) {
               if (font.basename === "Satoshi-VariableItalic") {
