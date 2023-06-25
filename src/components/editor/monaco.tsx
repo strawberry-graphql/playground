@@ -7,10 +7,12 @@ import { MarkerSeverity, MarkerTag } from "monaco-editor";
 import { useCallback, useEffect } from "react";
 
 export const MonacoEditor = ({
+  title,
   source,
   onChange,
   language = "plaintext",
 }: {
+  title: string;
   source: string;
   language?: string;
   onChange: (pythonSource: string) => void;
@@ -25,18 +27,24 @@ export const MonacoEditor = ({
   );
 
   return (
-    <Editor
-      options={{
-        readOnly: false,
-        minimap: { enabled: false },
-        fontSize: 14,
-        roundedSelection: false,
-        scrollBeyondLastLine: false,
-      }}
-      language={language}
-      //   theme={theme === "light" ? "Ayu-Light" : "Ayu-Dark"}
-      value={source}
-      onChange={handleChange}
-    />
+    <div className="flex flex-col h-full">
+      <div
+        className="bg-strawberry px-4 py-2 text-white font-bold text-sm"
+      >{title}</div>
+
+      <Editor
+        options={{
+          readOnly: false,
+          minimap: { enabled: false },
+          fontSize: 14,
+          roundedSelection: false,
+          scrollBeyondLastLine: false,
+        }}
+        language={language}
+        //   theme={theme === "light" ? "Ayu-Light" : "Ayu-Dark"}
+        value={source}
+        onChange={handleChange}
+      />
+    </div>
   );
 };
